@@ -1,6 +1,7 @@
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class PlayerScorerByRankOrderTest {
 
@@ -39,6 +40,20 @@ public class PlayerScorerByRankOrderTest {
         IScorer scorer = new PlayerScorerByRankOrder();
         int actualScore = scorer.getScore(player);
         assertEquals(12, actualScore);
+    }
+
+    @Test
+    public void bustIfScoreOver21(){
+        Card jack = new Card(Suit.CLUBS, Rank.JACK);
+        Card queen = new Card(Suit.HEARTS, Rank.QUEEN);
+        Card king = new Card(Suit.DIAMONDS, Rank.KING);
+        Player player = new Player("Andrew");
+        player.takeCard(king);
+        player.takeCard(jack);
+        player.takeCard(queen);
+        PlayerScorerByRankOrder scorer = new PlayerScorerByRankOrder();
+        int actualScore = scorer.getScore(player);
+        assertTrue(scorer.isBust(actualScore));
     }
 
 

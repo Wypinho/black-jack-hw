@@ -23,8 +23,8 @@ public class Runner {
 //            game.addPlayer(player);
 //        }
 
-        String prompt = String.format("Enter your name: ");
-        System.out.println(prompt);
+//        String prompt = String.format("Enter your name: ");
+        System.out.println("Enter your name: ");
         String playerName = scanner.next();
         Player player1 = new Player(playerName);
         game.addPlayer(player1);
@@ -46,17 +46,21 @@ public class Runner {
         }
         System.out.println(String.format("Hand total: %s", scorer.getScore(dealer)));
 
-//        for(Player player: game.getPlayers()){
+        String choice;
+
+        do {
             String output2 = String.format("%s has:", player1.getName());
             System.out.println(output2);
             for(int i = 0; i < player1.cardCount(); i ++){
                 System.out.println(player1.showCard(i));
             }
             System.out.println(String.format("Hand total: %s", scorer.getScore(player1)));
-//        }
+            System.out.println("Stand or Twist?");
+            choice = scanner.next();
+        } while (!choice.equals("Stand"));
 
         if(game.checkDraw()){
-            System.out.println("It's a draw!");
+            System.out.println("It's a draw - the Dealer wins!");
         } else {
             Player winner = game.checkWinner();
             String winnerName = winner.getName();

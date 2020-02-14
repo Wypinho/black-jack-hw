@@ -17,4 +17,9 @@ public class PlayerScorerByRankOrder implements IScorer {
         }
         return score;
     }
+
+    public boolean isBust(int score){
+        return score > 21;
+    }
+
 }
