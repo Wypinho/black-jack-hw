@@ -64,7 +64,9 @@ public class GameTest {
     @Test
     public void gameCanCheckWinner(){
         player1.takeCard(faceCard);
-        dealer.takeCard(aceCard);
+        player1.takeCard(aceCard);
+        dealer.takeCard(faceCard);
+        dealer.takeCard(threeCard);
         assertEquals(player1, game.checkWinner());
     }
 
