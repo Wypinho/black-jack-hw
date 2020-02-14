@@ -56,5 +56,10 @@ public class PlayerScorerByRankOrderTest {
         assertTrue(scorer.isBust(actualScore));
     }
 
+    @Test
+    public void acesRevaluedIfOver21(){
+        Card jack = new Card(Suit.CLUBS, Rank.JACK);
+
+    }
 
 }

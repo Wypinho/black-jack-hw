@@ -15,6 +15,17 @@ public class PlayerScorerByRankOrder implements IScorer {
                 score += card.getRank().ordinal() + 1;
             }
         }
+        if (score > 21){
+            for(Card card : player.getHand()){
+                if (card.getRank().ordinal() == 0){
+                    score += 1;
+                } else if (card.isFaceCard()) {
+                    score += 10;
+                } else {
+                    score += card.getRank().ordinal() + 1;
+                }
+            }
+        }
         return score;
     }
 
