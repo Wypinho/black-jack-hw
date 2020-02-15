@@ -60,6 +60,10 @@ public class Runner {
             } else {
                 System.out.println("Stand or Twist?");
                 choice = scanner.next();
+                while (!choice.equals("Twist") && !choice.equals("Stand")){
+                    System.out.println("Please type 'Stand' or 'Twist'?");
+                    choice = scanner.next();
+                }
                 if (choice.equals("Twist")){
                     Card card = deck.dealOne();
                     player1.takeCard(card);
