@@ -34,7 +34,7 @@ public class Runner {
         String output = String.format("%s has:", dealer.getName());
         System.out.println(output);
         System.out.println(dealer.showCard(0));
-
+        System.out.println();
 
         String choice = "";
         int score = 0;
@@ -48,10 +48,12 @@ public class Runner {
                 score = scorer.getScore(player);
                 System.out.println(String.format("Hand total: %s", score));
                 if (scorer.isBust(score)) {
-                    String bustMessage = String.format("%s Bust", player.getName());
+                    String bustMessage = String.format("%s is Bust!", player.getName());
                     System.out.println(bustMessage);
+                    System.out.println();
                 } else {
-                    System.out.println("Stand or Twist?");
+                    String choiceRequest = String.format("%s - Stand or Twist?", player.getName());
+                    System.out.println(choiceRequest);
                     choice = scanner.next();
                     while (!choice.equals("Twist") && !choice.equals("Stand")) {
                         System.out.println("Please type 'Stand' or 'Twist'?");
@@ -78,7 +80,8 @@ public class Runner {
                 System.out.println(String.format("Hand total: %s", dealerScore));
                 Thread.sleep(2000);
                 if (scorer.isBust(dealerScore)) {
-                    System.out.println("Dealer Bust!");
+                    System.out.println("Dealer is Bust!");
+                    System.out.println();
                 } else if (dealerScore < 16) {
                     dealerChoice = "Twist";
                     System.out.println("Dealer Twists");
@@ -92,7 +95,11 @@ public class Runner {
                 }
             } while (!scorer.isBust(dealerScore) && !dealerChoice.equals("Stand"));
         }
+
         for (Player player : game.getPlayers()) {
+            String resultStatement = String.format("In %s's game: ", player.getName());
+            System.out.println(resultStatement);
+            Thread.sleep(2000);
             if (game.checkDraw(player)) {
                 System.out.println("It's a draw - the Dealer wins!");
             } else {
@@ -101,6 +108,7 @@ public class Runner {
                 String output3 = String.format("%s wins!", winnerName);
                 System.out.println(output3);
             }
+            System.out.println();
         }
 
     }

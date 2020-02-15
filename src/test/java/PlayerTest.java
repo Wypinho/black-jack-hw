@@ -30,12 +30,6 @@ public class PlayerTest {
         assertEquals(1, player.cardCount());
     }
 
-//    @Test
-//    public void playerHasHandTotal(){
-//        player.takeCard(card);
-//        assertEquals(1, player.handTotal());
-//    }
-
     @Test
     public void playerCanShowCard(){
         player.takeCard(card);
