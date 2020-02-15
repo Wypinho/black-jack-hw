@@ -68,6 +68,30 @@ public class Runner {
             }
         } while (!scorer.isBust(score) && !choice.equals("Stand"));
 
+        if (!scorer.isBust(score)) {
+            String dealerChoice = "";
+            int dealerScore = 0;
+            do {
+                String output2 = String.format("%s has:", dealer.getName());
+                System.out.println(output2);
+                for (int i = 0; i < dealer.cardCount(); i++) {
+                    System.out.println(dealer.showCard(i));
+                }
+                dealerScore = scorer.getScore(dealer);
+                System.out.println(String.format("Hand total: %s", dealerScore));
+                if (scorer.isBust(dealerScore)) {
+                    System.out.println("Dealer Bust");
+                } else {
+                    System.out.println("Stand or Twist?");
+                    dealerChoice = scanner.next();
+                    if (dealerChoice.equals("Twist")) {
+                        Card card = deck.dealOne();
+                        dealer.takeCard(card);
+                    }
+                }
+            } while (!scorer.isBust(dealerScore) && !dealerChoice.equals("Stand"));
+        }
+
         if(game.checkDraw()){
             System.out.println("It's a draw - the Dealer wins!");
         } else {
