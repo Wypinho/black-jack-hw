@@ -45,14 +45,27 @@ public class Game {
 
     public boolean checkDraw(Player player){
         boolean drawgame = true;
+        boolean dealerBlackjack = this.isBlackJack(dealer);
+        boolean playerBlackjack = this.isBlackJack(player);
+        if (dealerBlackjack && playerBlackjack){
+            return drawgame;
+        }
         int handTotal = scorer.getScore(this.dealer);
-//        for(Player player: this.players){
-            int currentPlayerScore = scorer.getScore(player);
-            if(currentPlayerScore != handTotal){
-                drawgame = false;
-            }
-//        }
+        int currentPlayerScore = scorer.getScore(player);
+        
+        if(currentPlayerScore != handTotal){
+            drawgame = false;
+        }
         return drawgame;
+    }
+
+    private boolean isBlackJack(Player player) {
+        int score = scorer.getScore(player);
+        int noOfCards = player.cardCount();
+        if (score == 21 && noOfCards == 2) {
+            return true;
+        }
+        return false;
     }
 
     public Player checkWinner(Player player){

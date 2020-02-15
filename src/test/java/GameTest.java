@@ -1,8 +1,7 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class GameTest {
 
@@ -60,10 +59,10 @@ public class GameTest {
     public void gameCanCheckDraw(){
         game.start(0);
         player1.takeCard(faceCard);
-        player1.takeCard(aceCard);
+        player1.takeCard(threeCard);
         dealer = game.getDealer();
         dealer.takeCard(faceCard);
-        dealer.takeCard(aceCard);
+        dealer.takeCard(threeCard);
         assertTrue(game.checkDraw(player1));
     }
 
@@ -101,6 +100,30 @@ public class GameTest {
         dealer.takeCard(threeCard);
         dealer.takeCard(nineCard);
         dealer.takeCard(threeCard);
+        assertEquals(player1, game.checkWinner(player1));
+    }
+
+    @Test
+    public void twoBlackjacksIsADraw(){
+        game.start(0);
+        player1.takeCard(faceCard);
+        player1.takeCard(aceCard);
+        dealer = game.getDealer();
+        dealer.takeCard(faceCard);
+        dealer.takeCard(aceCard);
+        assertTrue(game.checkDraw(player1));
+    }
+
+    @Test
+    public void blackjackBeatsAnyOther21(){
+        game.start(0);
+        player1.takeCard(faceCard);
+        player1.takeCard(aceCard);
+        dealer = game.getDealer();
+        dealer.takeCard(faceCard);
+        dealer.takeCard(faceCard);
+        dealer.takeCard(aceCard);
+        assertFalse(game.checkDraw(player1));
         assertEquals(player1, game.checkWinner(player1));
     }
 
