@@ -45,7 +45,7 @@ public class Game {
 
     public boolean checkDraw(){
         boolean drawgame = true;
-        int handTotal = scorer.getScore(this.players.get(0));
+        int handTotal = scorer.getScore(this.dealer);
         for(Player player: this.players){
             int currentPlayerScore = scorer.getScore(player);
             if(currentPlayerScore != handTotal){
@@ -58,6 +58,10 @@ public class Game {
     public Player checkWinner(){
         int highest = 0;
         Player winner = null;
+        if(!scorer.isBust(scorer.getScore(this.dealer))) {
+            highest = scorer.getScore(this.dealer);
+            winner = dealer;
+        }
         for(Player player : this.players){
             int currentPlayerScore = scorer.getScore(player);
             if( currentPlayerScore > highest && !scorer.isBust(currentPlayerScore)){

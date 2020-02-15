@@ -29,12 +29,13 @@ public class Runner {
         Player player1 = new Player(playerName);
         game.addPlayer(player1);
 
-        Player dealer = new Player("Dealer");
-        game.addPlayer(dealer);
+//        Player dealer = new Player("Dealer");
+//        game.addPlayer(dealer);
 //        System.out.println("How many cards are we playing with?");
 //        int noOfCards = parseInt(scanner.next());
 
         game.start(2);
+        Player dealer = game.getDealer();
 //
 //        System.out.println("Dealer has:");
 //        System.out.println(dealer.showCard(0));
@@ -90,6 +91,11 @@ public class Runner {
                     System.out.println("Dealer Twists");
                     Thread.sleep(2000);
                     Card card = deck.dealOne();
+                    dealer.takeCard(card);
+                    dealer.takeCard(card);
+                    dealer.takeCard(card);
+                    dealer.takeCard(card);
+                    dealer.takeCard(card);
                     dealer.takeCard(card);
                 } else {
                     dealerChoice = "Stand";

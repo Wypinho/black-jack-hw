@@ -39,7 +39,7 @@ public class GameTest {
     public void gameCanStart(){
         game.start(2);
         assertEquals(2, player1.cardCount());
-        assertEquals(2, dealer.cardCount());
+        assertEquals(2, game.getDealer().cardCount());
     }
 
     @Test
@@ -53,13 +53,15 @@ public class GameTest {
     public void gameCanDealMultipleCards(){
         game.start(20);
         assertEquals(20, player1.cardCount());
-        assertEquals(20, dealer.cardCount());
+        assertEquals(20, game.getDealer().cardCount());
     }
 
     @Test
     public void gameCanCheckDraw(){
+        game.start(0);
         player1.takeCard(faceCard);
         player1.takeCard(aceCard);
+        dealer = game.getDealer();
         dealer.takeCard(faceCard);
         dealer.takeCard(aceCard);
         assertTrue(game.checkDraw());
@@ -67,8 +69,10 @@ public class GameTest {
 
     @Test
     public void gameCanCheckWinnerByValue(){
+        game.start(0);
         player1.takeCard(faceCard);
         player1.takeCard(aceCard);
+        dealer = game.getDealer();
         dealer.takeCard(faceCard);
         dealer.takeCard(threeCard);
         assertEquals(player1, game.checkWinner());
@@ -76,13 +80,28 @@ public class GameTest {
 
     @Test
     public void playersAutomaticallyLoseIfBust(){
+        game.start(0);
         player1.takeCard(faceCard);
         player1.takeCard(aceCard);
         player1.takeCard(nineCard);
         player1.takeCard(threeCard);
+        dealer = game.getDealer();
         dealer.takeCard(faceCard);
         dealer.takeCard(threeCard);
         assertEquals(dealer, game.checkWinner());
+    }
+
+    @Test
+    public void dealerAutomaticallyLosesIfBust(){
+        game.start(0);
+        player1.takeCard(faceCard);
+        player1.takeCard(aceCard);
+        dealer = game.getDealer();
+        dealer.takeCard(faceCard);
+        dealer.takeCard(threeCard);
+        dealer.takeCard(nineCard);
+        dealer.takeCard(threeCard);
+        assertEquals(player1, game.checkWinner());
     }
 
 }
