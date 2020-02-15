@@ -7,7 +7,7 @@ public class Runner {
 
         Scanner scanner = new Scanner(System.in);
         Deck deck = new Deck();
-        IScorer scorer = new PlayerScorerByRankOrder();
+        PlayerScorerByRankOrder scorer = new PlayerScorerByRankOrder();
         Game game = new Game(deck, scorer);
         System.out.println("Welcome to BlackJack!");
 //        System.out.println("How many players would you like to play?");
@@ -46,17 +46,25 @@ public class Runner {
         }
         System.out.println(String.format("Hand total: %s", scorer.getScore(dealer)));
 
-        String choice;
-
+        String choice = "";
         do {
             String output2 = String.format("%s has:", player1.getName());
             System.out.println(output2);
             for(int i = 0; i < player1.cardCount(); i ++){
                 System.out.println(player1.showCard(i));
             }
-            System.out.println(String.format("Hand total: %s", scorer.getScore(player1)));
-            System.out.println("Stand or Twist?");
-            choice = scanner.next();
+            int score = scorer.getScore(player1);
+            System.out.println(String.format("Hand total: %s", score));
+            if (scorer.isBust(score)){
+                System.out.println("Player1 Bust");
+            } else {
+                System.out.println("Stand or Twist?");
+                choice = scanner.next();
+                if (choice.equals("Twist")){
+                    Card card = deck.dealOne();
+                    player1.takeCard(card);
+                }
+            }
         } while (!choice.equals("Stand"));
 
         if(game.checkDraw()){

@@ -1,7 +1,6 @@
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class PlayerScorerByRankOrderTest {
 
@@ -59,7 +58,35 @@ public class PlayerScorerByRankOrderTest {
     @Test
     public void acesRevaluedIfOver21(){
         Card jack = new Card(Suit.CLUBS, Rank.JACK);
+        Card nine = new Card(Suit.DIAMONDS, Rank.NINE);
+        Card ace = new Card(Suit.SPADES, Rank.ACE);
+        Card ace2 = new Card(Suit.HEARTS, Rank.ACE);
+        Player player = new Player("Andrew");
+        player.takeCard(jack);
+        player.takeCard(nine);
+        player.takeCard(ace);
+        player.takeCard(ace2);
+        PlayerScorerByRankOrder scorer = new PlayerScorerByRankOrder();
+        int actualScore = scorer.getScore(player);
+        assertFalse(scorer.isBust(actualScore));
+    }
 
+    @Test
+    public void aceRevaluationDoesntAffectScoreOf21Plus(){
+        Card jack = new Card(Suit.CLUBS, Rank.JACK);
+        Card nine = new Card(Suit.DIAMONDS, Rank.NINE);
+        Card ace = new Card(Suit.SPADES, Rank.ACE);
+        Card ace2 = new Card(Suit.HEARTS, Rank.ACE);
+        Card ace3 = new Card(Suit.DIAMONDS, Rank.ACE);
+        Player player = new Player("Andrew");
+        player.takeCard(jack);
+        player.takeCard(nine);
+        player.takeCard(ace);
+        player.takeCard(ace2);
+        player.takeCard(ace3);
+        PlayerScorerByRankOrder scorer = new PlayerScorerByRankOrder();
+        int actualScore = scorer.getScore(player);
+        assertTrue(scorer.isBust(actualScore));
     }
 
 }
