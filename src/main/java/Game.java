@@ -45,21 +45,24 @@ public class Game {
 
     public boolean checkDraw(Player player){
         boolean drawgame = true;
-        boolean dealerBlackjack = this.isBlackJack(dealer);
-        boolean playerBlackjack = this.isBlackJack(player);
-        if (dealerBlackjack && playerBlackjack){
+        int dealerTotal = scorer.getScore(this.dealer);
+        int currentPlayerScore = scorer.getScore(player);
+        if (scorer.isBust(dealerTotal) && scorer.isBust(currentPlayerScore)) {
             return drawgame;
         }
-        int handTotal = scorer.getScore(this.dealer);
-        int currentPlayerScore = scorer.getScore(player);
-        
-        if(currentPlayerScore != handTotal){
+        if(currentPlayerScore != dealerTotal){
             drawgame = false;
+        } else if (dealerTotal == 21 && currentPlayerScore == 21) {
+            boolean dealerBlackjack = this.isBlackJack(dealer);
+            boolean playerBlackjack = this.isBlackJack(player);
+            if (!dealerBlackjack || !playerBlackjack) {
+                drawgame = false;
+            }
         }
         return drawgame;
     }
 
-    private boolean isBlackJack(Player player) {
+    public boolean isBlackJack(Player player) {
         int score = scorer.getScore(player);
         int noOfCards = player.cardCount();
         if (score == 21 && noOfCards == 2) {
@@ -75,10 +78,14 @@ public class Game {
             highest = scorer.getScore(this.dealer);
             winner = dealer;
         }
-        int currentPlayerScore = scorer.getScore(player);
-        if( currentPlayerScore > highest && !scorer.isBust(currentPlayerScore)){
-            highest = currentPlayerScore;
-            winner = player;
+        boolean dealerBlackjack = this.isBlackJack(dealer);
+        if (!dealerBlackjack) {
+            int currentPlayerScore = scorer.getScore(player);
+            boolean playerBlackjack = this.isBlackJack(player);
+            if (playerBlackjack || (currentPlayerScore > highest && !scorer.isBust(currentPlayerScore))) {
+                highest = currentPlayerScore;
+                winner = player;
+            }
         }
         return winner;
     }

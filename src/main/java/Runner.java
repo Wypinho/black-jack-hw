@@ -23,11 +23,6 @@ public class Runner {
             game.addPlayer(player);
         }
 
-//        System.out.println("Enter your name: ");
-//        String playerName = scanner.next();
-//        Player player1 = new Player(playerName);
-//        game.addPlayer(player1);
-
         game.start(2);
         Player dealer = game.getDealer();
 
@@ -45,37 +40,45 @@ public class Runner {
                 for (int i = 0; i < player.cardCount(); i++) {
                     System.out.println(player.showCard(i));
                 }
-                score = scorer.getScore(player);
-                System.out.println(String.format("Hand total: %s", score));
-                if (scorer.isBust(score)) {
-                    String bustMessage = String.format("%s is Bust!", player.getName());
-                    System.out.println(bustMessage);
+                if (game.isBlackJack(player)) {
+                    System.out.println("BlackJack!!!");
                     System.out.println();
                 } else {
-                    String choiceRequest = String.format("%s - Stand or Twist?", player.getName());
-                    System.out.println(choiceRequest);
-                    choice = scanner.next();
-                    while (!choice.equals("Twist") && !choice.equals("Stand")) {
-                        System.out.println("Please type 'Stand' or 'Twist'?");
+                    score = scorer.getScore(player);
+                    System.out.println(String.format("Hand total: %s", score));
+                    if (scorer.isBust(score)) {
+                        String bustMessage = String.format("%s is Bust!", player.getName());
+                        System.out.println(bustMessage);
+                        System.out.println();
+                    } else {
+                        String choiceRequest = String.format("%s - Stand or Twist?", player.getName());
+                        System.out.println(choiceRequest);
                         choice = scanner.next();
-                    }
-                    if (choice.equals("Twist")) {
-                        Card card = deck.dealOne();
-                        player.takeCard(card);
+                        while (!choice.equals("Twist") && !choice.equals("Stand")) {
+                            System.out.println("Please type 'Stand' or 'Twist'?");
+                            choice = scanner.next();
+                        }
+                        if (choice.equals("Twist")) {
+                            Card card = deck.dealOne();
+                            player.takeCard(card);
+                        }
                     }
                 }
-            } while (!scorer.isBust(score) && !choice.equals("Stand"));
+            } while (!scorer.isBust(score) && !choice.equals("Stand") && !game.isBlackJack(player));
         }
 
-        if (!scorer.isBust(score)) {
-            String dealerChoice = "";
-            int dealerScore = 0;
-            do {
-                String output2 = String.format("%s has:", dealer.getName());
-                System.out.println(output2);
-                for (int i = 0; i < dealer.cardCount(); i++) {
-                    System.out.println(dealer.showCard(i));
-                }
+        String dealerChoice = "";
+        int dealerScore = 0;
+        do {
+            String output2 = String.format("%s has:", dealer.getName());
+            System.out.println(output2);
+            for (int i = 0; i < dealer.cardCount(); i++) {
+                System.out.println(dealer.showCard(i));
+            }
+            if (game.isBlackJack(dealer)) {
+                System.out.println("BlackJack!!!");
+                System.out.println();
+            } else {
                 dealerScore = scorer.getScore(dealer);
                 System.out.println(String.format("Hand total: %s", dealerScore));
                 Thread.sleep(2000);
@@ -93,8 +96,9 @@ public class Runner {
                     System.out.println("Dealer Stands");
                     Thread.sleep(1000);
                 }
-            } while (!scorer.isBust(dealerScore) && !dealerChoice.equals("Stand"));
-        }
+            }
+        } while (!scorer.isBust(dealerScore) && !dealerChoice.equals("Stand") && !game.isBlackJack(dealer));
+
 
         for (Player player : game.getPlayers()) {
             String resultStatement = String.format("In %s's game: ", player.getName());

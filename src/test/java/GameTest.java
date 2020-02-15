@@ -104,6 +104,21 @@ public class GameTest {
     }
 
     @Test
+    public void dealerAndPlayerBustIsTreatedAsADraw(){
+        game.start(0);
+        player1.takeCard(faceCard);
+        player1.takeCard(aceCard);
+        player1.takeCard(nineCard);
+        player1.takeCard(threeCard);
+        dealer = game.getDealer();
+        dealer.takeCard(faceCard);
+        dealer.takeCard(threeCard);
+        dealer.takeCard(nineCard);
+        dealer.takeCard(threeCard);
+        assertTrue(game.checkDraw(player1));
+    }
+
+    @Test
     public void twoBlackjacksIsADraw(){
         game.start(0);
         player1.takeCard(faceCard);
@@ -115,7 +130,7 @@ public class GameTest {
     }
 
     @Test
-    public void blackjackBeatsAnyOther21(){
+    public void playerBlackjackBeatsAnyOtherDealer21(){
         game.start(0);
         player1.takeCard(faceCard);
         player1.takeCard(aceCard);
@@ -125,6 +140,19 @@ public class GameTest {
         dealer.takeCard(aceCard);
         assertFalse(game.checkDraw(player1));
         assertEquals(player1, game.checkWinner(player1));
+    }
+
+    @Test
+    public void dealerBlackjackBeatsAnyOtherPlayer21(){
+        game.start(0);
+        dealer = game.getDealer();
+        dealer.takeCard(faceCard);
+        dealer.takeCard(aceCard);
+        player1.takeCard(faceCard);
+        player1.takeCard(faceCard);
+        player1.takeCard(aceCard);
+        assertFalse(game.checkDraw(player1));
+        assertEquals(dealer, game.checkWinner(player1));
     }
 
 }
