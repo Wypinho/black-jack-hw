@@ -43,32 +43,32 @@ public class Game {
         }
     }
 
-    public boolean checkDraw(){
+    public boolean checkDraw(Player player){
         boolean drawgame = true;
         int handTotal = scorer.getScore(this.dealer);
-        for(Player player: this.players){
+//        for(Player player: this.players){
             int currentPlayerScore = scorer.getScore(player);
             if(currentPlayerScore != handTotal){
                 drawgame = false;
             }
-        }
+//        }
         return drawgame;
     }
 
-    public Player checkWinner(){
+    public Player checkWinner(Player player){
         int highest = 0;
         Player winner = null;
         if(!scorer.isBust(scorer.getScore(this.dealer))) {
             highest = scorer.getScore(this.dealer);
             winner = dealer;
         }
-        for(Player player : this.players){
+//        for(Player player : this.players){
             int currentPlayerScore = scorer.getScore(player);
             if( currentPlayerScore > highest && !scorer.isBust(currentPlayerScore)){
                 highest = currentPlayerScore;
                 winner = player;
             }
-        }
+//        }
         return winner;
     }
 }
