@@ -19,12 +19,10 @@ public class GameTest {
     @Before
     public void setup(){
         player1 = new Player("Steve");
-        dealer = new Player("James");
         deck = new Deck();
         scorer = new PlayerScorerByRankOrder();
         game = new Game(deck, scorer);
         game.addPlayer(player1);
-        game.addPlayer(dealer);
 
         faceCard = new Card(Suit.SPADES, Rank.JACK);
         aceCard = new Card(Suit.SPADES, Rank.ACE);
@@ -32,10 +30,9 @@ public class GameTest {
         threeCard = new Card(Suit.DIAMONDS, Rank.THREE);
     }
 
-
     @Test
     public void gameHasPlayers(){
-        assertEquals(2, game.playerCount());
+        assertEquals(1, game.playerCount());
     }
 
     @Test
@@ -43,6 +40,13 @@ public class GameTest {
         game.start(2);
         assertEquals(2, player1.cardCount());
         assertEquals(2, dealer.cardCount());
+    }
+
+    @Test
+    public void newGameAutomaticallyHasDealerWithCards(){
+        game.start(2);
+        assertEquals("Dealer", game.getDealer().getName());
+        assertEquals(2, game.getDealer().cardCount());
     }
 
     @Test

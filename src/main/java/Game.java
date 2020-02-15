@@ -3,6 +3,7 @@ import java.util.ArrayList;
 public class Game {
 
     private ArrayList<Player> players;
+    private Player dealer;
     private Deck deck;
     private IScorer scorer;
 
@@ -24,7 +25,16 @@ public class Game {
         this.players.add(player);
     }
 
+    public Player getDealer() {
+        return this.dealer;
+    }
+
     public void start(int amountOfCards){
+        dealer = new Player("Dealer");
+        for (int i = 0; i < amountOfCards; i ++){
+            Card card = deck.dealOne();
+            dealer.takeCard(card);
+        }
         for(Player player:this.players){
             for (int i = 0; i < amountOfCards; i ++){
                 Card card = deck.dealOne();
