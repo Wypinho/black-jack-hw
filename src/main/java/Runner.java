@@ -80,7 +80,7 @@ public class Runner {
                 System.out.println(String.format("Hand total: %s", dealerScore));
                 Thread.sleep(2000);
                 if (scorer.isBust(dealerScore)) {
-                    System.out.println("Dealer Bust");
+                    System.out.println("Dealer Bust!");
                 } else if (dealerScore < 16) {
                     dealerChoice = "Twist";
                     System.out.println("Dealer Twists");
