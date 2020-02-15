@@ -62,12 +62,23 @@ public class GameTest {
     }
 
     @Test
-    public void gameCanCheckWinner(){
+    public void gameCanCheckWinnerByValue(){
         player1.takeCard(faceCard);
         player1.takeCard(aceCard);
         dealer.takeCard(faceCard);
         dealer.takeCard(threeCard);
         assertEquals(player1, game.checkWinner());
+    }
+
+    @Test
+    public void playersAutomaticallyLoseIfBust(){
+        player1.takeCard(faceCard);
+        player1.takeCard(aceCard);
+        player1.takeCard(nineCard);
+        player1.takeCard(threeCard);
+        dealer.takeCard(faceCard);
+        dealer.takeCard(threeCard);
+        assertEquals(dealer, game.checkWinner());
     }
 
 }

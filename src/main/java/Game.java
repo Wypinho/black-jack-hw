@@ -50,7 +50,7 @@ public class Game {
         Player winner = null;
         for(Player player : this.players){
             int currentPlayerScore = scorer.getScore(player);
-            if( currentPlayerScore > highest){
+            if( currentPlayerScore > highest && !scorer.isBust(currentPlayerScore)){
                 highest = currentPlayerScore;
                 winner = player;
             }
