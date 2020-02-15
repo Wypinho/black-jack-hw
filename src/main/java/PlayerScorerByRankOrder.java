@@ -16,6 +16,7 @@ public class PlayerScorerByRankOrder implements IScorer {
             }
         }
         if (score > 21){
+            score = 0;
             for(Card card : player.getHand()){
                 if (card.getRank().ordinal() == 0){
                     score += 1;
