@@ -3,7 +3,7 @@ import java.util.Scanner;
 import static java.lang.Integer.parseInt;
 
 public class Runner {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
         Scanner scanner = new Scanner(System.in);
         Deck deck = new Deck();
@@ -29,7 +29,7 @@ public class Runner {
         Player player1 = new Player(playerName);
         game.addPlayer(player1);
 
-        Player dealer = new Player("Del");
+        Player dealer = new Player("Dealer");
         game.addPlayer(dealer);
 //        System.out.println("How many cards are we playing with?");
 //        int noOfCards = parseInt(scanner.next());
@@ -41,10 +41,9 @@ public class Runner {
 
         String output = String.format("%s has:", dealer.getName());
         System.out.println(output);
-        for(int i = 0; i < dealer.cardCount(); i ++){
-            System.out.println(dealer.showCard(i));
-        }
-        System.out.println(String.format("Hand total: %s", scorer.getScore(dealer)));
+//        for(int i = 0; i < dealer.cardCount(); i ++){
+            System.out.println(dealer.showCard(0));
+//        }
 
         String choice = "";
         int score = 0;
@@ -79,15 +78,19 @@ public class Runner {
                 }
                 dealerScore = scorer.getScore(dealer);
                 System.out.println(String.format("Hand total: %s", dealerScore));
+                Thread.sleep(2000);
                 if (scorer.isBust(dealerScore)) {
                     System.out.println("Dealer Bust");
+                } else if (dealerScore < 16) {
+                    dealerChoice = "Twist";
+                    System.out.println("Dealer Twists");
+                    Thread.sleep(2000);
+                    Card card = deck.dealOne();
+                    dealer.takeCard(card);
                 } else {
-                    System.out.println("Stand or Twist?");
-                    dealerChoice = scanner.next();
-                    if (dealerChoice.equals("Twist")) {
-                        Card card = deck.dealOne();
-                        dealer.takeCard(card);
-                    }
+                    dealerChoice = "Stand";
+                    System.out.println("Dealer Stands");
+                    Thread.sleep(1000);
                 }
             } while (!scorer.isBust(dealerScore) && !dealerChoice.equals("Stand"));
         }
