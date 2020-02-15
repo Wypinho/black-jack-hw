@@ -62,13 +62,11 @@ public class Game {
             highest = scorer.getScore(this.dealer);
             winner = dealer;
         }
-//        for(Player player : this.players){
-            int currentPlayerScore = scorer.getScore(player);
-            if( currentPlayerScore > highest && !scorer.isBust(currentPlayerScore)){
-                highest = currentPlayerScore;
-                winner = player;
-            }
-//        }
+        int currentPlayerScore = scorer.getScore(player);
+        if( currentPlayerScore > highest && !scorer.isBust(currentPlayerScore)){
+            highest = currentPlayerScore;
+            winner = player;
+        }
         return winner;
     }
 }

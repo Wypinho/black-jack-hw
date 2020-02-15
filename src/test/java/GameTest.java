@@ -78,30 +78,30 @@ public class GameTest {
         assertEquals(player1, game.checkWinner(player1));
     }
 
-//    @Test
-//    public void playersAutomaticallyLoseIfBust(){
-//        game.start(0);
-//        player1.takeCard(faceCard);
-//        player1.takeCard(aceCard);
-//        player1.takeCard(nineCard);
-//        player1.takeCard(threeCard);
-//        dealer = game.getDealer();
-//        dealer.takeCard(faceCard);
-//        dealer.takeCard(threeCard);
-//        assertEquals(dealer, game.checkWinner());
-//    }
-//
-//    @Test
-//    public void dealerAutomaticallyLosesIfBust(){
-//        game.start(0);
-//        player1.takeCard(faceCard);
-//        player1.takeCard(aceCard);
-//        dealer = game.getDealer();
-//        dealer.takeCard(faceCard);
-//        dealer.takeCard(threeCard);
-//        dealer.takeCard(nineCard);
-//        dealer.takeCard(threeCard);
-//        assertEquals(player1, game.checkWinner());
-//    }
+    @Test
+    public void playersAutomaticallyLoseIfBust(){
+        game.start(0);
+        player1.takeCard(faceCard);
+        player1.takeCard(aceCard);
+        player1.takeCard(nineCard);
+        player1.takeCard(threeCard);
+        dealer = game.getDealer();
+        dealer.takeCard(faceCard);
+        dealer.takeCard(threeCard);
+        assertEquals(dealer, game.checkWinner(player1));
+    }
+
+    @Test
+    public void dealerAutomaticallyLosesIfBust(){
+        game.start(0);
+        player1.takeCard(faceCard);
+        player1.takeCard(aceCard);
+        dealer = game.getDealer();
+        dealer.takeCard(faceCard);
+        dealer.takeCard(threeCard);
+        dealer.takeCard(nineCard);
+        dealer.takeCard(threeCard);
+        assertEquals(player1, game.checkWinner(player1));
+    }
 
 }

@@ -92,15 +92,16 @@ public class Runner {
                 }
             } while (!scorer.isBust(dealerScore) && !dealerChoice.equals("Stand"));
         }
-
-//        if(game.checkDraw()){
-//            System.out.println("It's a draw - the Dealer wins!");
-//        } else {
-//            Player winner = game.checkWinner();
-//            String winnerName = winner.getName();
-//            String output3 = String.format("%s wins!", winnerName);
-//            System.out.println(output3);
-//        }
+        for (Player player : game.getPlayers()) {
+            if (game.checkDraw(player)) {
+                System.out.println("It's a draw - the Dealer wins!");
+            } else {
+                Player winner = game.checkWinner(player);
+                String winnerName = winner.getName();
+                String output3 = String.format("%s wins!", winnerName);
+                System.out.println(output3);
+            }
+        }
 
     }
 }
